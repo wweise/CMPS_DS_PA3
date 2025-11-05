@@ -1,1 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CMPS 260: Module 3 Programming Assignment</title>
+    <style> * { font-family: monospace; }</style>
+    <script>
+      console.log("Project");
 
+      function Node(element) {
+        this.element = element;
+        this.next = null;
+      }
+
+      function LinkedList() {
+        this.head = null;
+        this.length = 0;
+      }
+
+      LinkedList.prototype.append = function(element) {
+        var node = new Node(element);
+        var current;
+        if (this.head === null) {
+          this.head = node;
+        } else {
+          current = this.head;
+          while (current.next) {
+            current = current.next;
+          }
+          current.next = node;
+        }
+        this.length++;
+      };
+
+      LinkedList.prototype.print = function() {
+        var current = this.head;
+        var output = "List: ";
+        while (current) {
+          output += current.element.name + (current.next ? " -> " : "");
+          current = current.next;
+        }
+        console.log(output);
+      };
+
+      LinkedList.prototype.getNodeAt = function(position) {
+        if (position < 0 || position >= this.length) return null;
+        var current = this.head;
+        var index = 0;
+        while (index < position) {
+          current = current.next;
+          index++;
+        }
+        return current;
+      };
+
+      LinkedList.prototype.appendNode = function(node) {
+        if (!node) return;
+        if (this.head === null) {
+          this.head = node;
+        } else {
+          var current = this.head;
+          while (current.next) {
+            current = current.next;
+          }
+          current.next = node;
+        }
+        var count = 0;
+        var temp = node;
+        while (temp) {
+          count++;
+          temp = temp.next;
+        }
+        this.length += count;
+      };
+
+      LinkedList.prototype.size = function() {
+        return this.length;
+      };
+
+      function Landmark(name) {
+        this.name = name;
+      }
+
+      var a1 = new Landmark("A1");
+      var a2 = new Landmark("A2");
+      var a3 = new Landmark("A3");
+      var a4 = new Landmark("A4");
+      var b = new Landmark("B");
+      var c = new Landmark("C");
+      var d = new Landmark("D");
+      var e = new Landmark("E");
+
+      var list1 = new LinkedList();
+      var list2 = new LinkedList();
+      var list3 = new LinkedList();
+
+      list1.append(a1);
+      list1.append(b);
+      list1.append(c);
+      list1.append(d);
+      list1.append(e);
+
+      list2.append(a2);
+
+      var tmpNode = list1.getNodeAt(1);
+      list2.appendNode(tmpNode);
+      list1.print();
+      list2.print();
+
+      list3.append(a3);
+      list3.append(a4);
+      var sharedNode = list1.getNodeAt(2);
+      list3.appendNode(sharedNode);
+      list3.print();
+
+      console.log("Size of list1:", list1.size());
+      console.log("Size of list2:", list2.size());
+      console.log("Size of list3:", list3.size());
+    </script>
+  </head>
+  <body> See console! </body>
+</html>
