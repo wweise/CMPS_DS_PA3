@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>CMPS 260: Module 3 Programming Assignment</title>
+    <style> * { font-family: monospace; }</style>
+    <script>
+      console.log("The linked list data structure");
+      console.log("Creating a linked list");
+
+      function LinkedList() {
+        function Node(element) {
+          this.element = element;
+          this.next = null;
+        }
+
+        var length = 0;
+        var head = null;
+
+        this.append = function(element) {
+          var node = new Node(element);
+          var current;
+          if (head === null) {
+            head = node;
+          } else {
+            current = head;
+            while (current.next) {
+              current = current.next;
+            }
+            current.next = node;
+          }
+          length++;
+        };
+
+        this.insert = function(position, element) {
+          if (position < 0 || position > length) return false;
+          var node = new Node(element);
+          var current = head;
+          var previous;
+          var index = 0;
+          if (position === 0) {
+            node.next = head;
+            head = node;
+          } else {
+            while (index < position) {
+              previous = current;
+              current = current.next;
+              index++;
+            }
+            node.next = current;
+            previous.next = node;
+          }
+          length++;
+          return true;
+        };
+
+        this.removeAt = function(position) {
+          if (position < 0 || position >= length) return null;
+          var current = head;
+          var previous;
+          var index = 0;
+          if (position === 0) {
+            head = current.next;
+          } else {
+            while (index < position) {
+              previous = current;
+              current = current.next;
+              index++;
+            }
+            previous.next = current.next;
+          }
+          length--;
+          return current.element;
+        };
+
+        this.remove = function(element) {
+          var index = this.indexOf(element);
+          return this.removeAt(index);
+        };
+
+        this.indexOf = function(element) {
+          var current = head;
+          var index = 0;
+          while (current) {
+            if (current.element === element) {
+              return index;
+            }
+            current = current.next;
+            index++;
+          }
+          return -1;
+        };
+
+        this.isEmpty = function() {
+          return length === 0;
+        };
+
+        this.size = function() {
+          return length;
+        };
+
+        this.getHead = function() {
+          return head;
+        };
+
+        this.toString = function() {
+          var current = head;
+          var string = "List: ";
+          while (current) {
+            string += current.element + (current.next ? " -> " : "");
+            current = current.next;
+          }
+          return string;
+        };
+
+        this.print = function() {
+          console.log(this.toString());
+        };
+      }
+
+      var list = new LinkedList();
+      list.append("A");
+      list.append("B");
+      list.append("C");
+      list.print();
+      list.insert(1, "X");
+      list.print();
+      console.log("Removed at 2:", list.removeAt(2));
+      list.print();
+      console.log("Index of C:", list.indexOf("C"));
+      console.log("Is empty?", list.isEmpty());
+      console.log("Size:", list.size());
+      console.log("Head element:", list.getHead().element);
+    </script>
+  </head>
+  <body> See console! </body>
+</html>
